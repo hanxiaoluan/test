@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import request from "../../utils/request";
 import "./index.scss";
 import Post from "./Post";
+import MyForm from "./Form";
+import dayjs from "dayjs";
 const _ = require("lodash");
 export interface contentType {
   [key: string]: any[];
@@ -28,6 +30,25 @@ const Home = () => {
     dining: false,
     other: false,
   });
+  const submitPost = (
+    ImageUrl: string,
+    kind: string,
+    ig_handle: string,
+    _uid: string
+  ) => {
+    console.log(Image, kind);
+    let _content = _.cloneDeep(content);
+    _content[kind].push({
+      Image: ImageUrl,
+      _uid: _uid,
+      date: dayjs().format("YYYY-MM-DD HH:mm"),
+      ig_handle: ig_handle,
+    });
+    setContent(_content);
+    if (!active[kind]) {
+      toggleCollpase(kind);
+    }
+  };
   const toggleCollpase = (value: string) => {
     if (active[value] === true) {
       setActive({
@@ -54,6 +75,7 @@ const Home = () => {
   return (
     <div className="home__wrapper">
       <aside className="home container">
+        <MyForm submitPost={submitPost} />
         <Post
           commoditys={content.storage}
           collapsed={active.storage}
