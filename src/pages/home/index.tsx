@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import request from "../../utils/request";
 import "./index.scss";
 import Post from "./Post";
-const _ = require("loadsh");
+const _ = require("lodash");
 export interface contentType {
   [key: string]: any[];
   storage: any[];
